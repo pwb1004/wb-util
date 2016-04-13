@@ -1,5 +1,6 @@
 
 #import "MyUtil.h"
+#import "MBProgressHUD.h"
 
 @implementation MyUtil
 
@@ -18,6 +19,20 @@
         return YES;
     }
     return NO;
+}
++ (NSString *)getNoneNilStringWithObject:(NSString *)object
+{
+    NSString * string = @"";
+    if (![object isKindOfClass:[NSNull class]]) {
+        string = [NSString stringWithFormat:@"%@", object];
+    }
+    if (object == nil) {
+        string = @"";
+    }
+    if ([object isKindOfClass:[NSString class]] && [object isEqualToString:@"null"]) {
+        string = @"";
+    }
+    return string;
 }
 
 @end
