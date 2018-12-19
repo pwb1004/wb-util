@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'wb-util_Example' do
+  pod 'wb-util', :path => '../'
+
+  target 'wb-util_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
