@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'wb-util'
-  s.version          = '1.2'
+  s.version          = '1.3'
   s.summary          = 'My utils used for develop'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
