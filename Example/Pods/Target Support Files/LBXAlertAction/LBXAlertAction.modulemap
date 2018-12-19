@@ -1,0 +1,6 @@
+framework module LBXAlertAction {
+  umbrella header "LBXAlertAction-umbrella.h"
+
+  export *
+  module * { export * }
+}

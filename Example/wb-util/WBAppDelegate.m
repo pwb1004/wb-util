@@ -7,12 +7,14 @@
 //
 
 #import "WBAppDelegate.h"
+#import "constant.h"
 
 @implementation WBAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    DLog(@"app start");
     return YES;
 }
 

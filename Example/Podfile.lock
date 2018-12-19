@@ -1,0 +1,66 @@
+PODS:
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - LBXAlertAction (1.1.1)
+  - Masonry (1.1.0)
+  - MBProgressHUD (1.0.0)
+  - "MBProgressHUD+Add (0.0.2)":
+    - MBProgressHUD (~> 1.0.0)
+  - MJExtension (3.0.15.1)
+  - MJRefresh (3.1.15.7)
+  - TPKeyboardAvoiding (1.3.2)
+  - wb-util (1.1):
+    - AFNetworking (~> 3.2.1)
+    - LBXAlertAction (~> 1.1.1)
+    - Masonry (~> 1.1.0)
+    - MBProgressHUD (~> 1.0.0)
+    - "MBProgressHUD+Add (~> 0.0.2)"
+    - MJExtension (~> 3.0.15.1)
+    - MJRefresh (~> 3.1.15.7)
+    - TPKeyboardAvoiding (~> 1.3.2)
+
+DEPENDENCIES:
+  - wb-util (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - AFNetworking
+    - LBXAlertAction
+    - Masonry
+    - MBProgressHUD
+    - "MBProgressHUD+Add"
+    - MJExtension
+    - MJRefresh
+    - TPKeyboardAvoiding
+
+EXTERNAL SOURCES:
+  wb-util:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  LBXAlertAction: d55188a2debb2bdd88b8d102c1c5552151c9014d
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
+  "MBProgressHUD+Add": 65c4d170c083a2a800ad4470d424ad5978f324c3
+  MJExtension: 19bc33ce2eee2d319760f5622562cf581a6ff756
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
+  TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
+  wb-util: 295a8762090b82ea5f1f51e00dc7a4b9a7a39718
+
+PODFILE CHECKSUM: acc354436d1c1b7a2562b76e1d9828a3e7c1b320
+
+COCOAPODS: 1.5.3
