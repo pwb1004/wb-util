@@ -403,17 +403,18 @@
 + (void)showTipText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block
 {
     UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    [MBProgressHUD hideAllHUDsForView:window animated:YES];
+    [MBProgressHUD hideHUDForView:window animated:YES];
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
     hud.mode = MBProgressHUDModeText;
-    hud.dimBackground = YES;
+    hud.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     hud.removeFromSuperViewOnHide = YES;
-    hud.detailsLabelText = text;
-    hud.detailsLabelColor = [UIColor whiteColor];
+    hud.detailsLabel.text = text;
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.detailsLabel.textColor = [UIColor whiteColor];
     if (block) {
         hud.completionBlock = block;
     }
-    [hud hide:YES afterDelay:SHOW_TIP_TIME];
+    [hud hideAnimated:YES afterDelay:SHOW_TIP_TIME];
 }
 
 + (BOOL)isValidIdCardNumber:(id)idNumber
@@ -427,16 +428,17 @@
 + (void)showProgressHud
 {
     UIWindow * window = [UIApplication sharedApplication].keyWindow;
-    [MBProgressHUD hideAllHUDsForView:window animated:YES];
+    [MBProgressHUD hideHUDForView:window animated:YES];
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
     hud.mode = MBProgressHUDModeIndeterminate;
-    hud.dimBackground = YES;
+    hud.bezelView.backgroundColor = [UIColor blackColor];
+    hud.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     hud.removeFromSuperViewOnHide = YES;
 }
 
 + (void)hideProgressHud
 {
-    [MBProgressHUD hideAllHUDsForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
+    [MBProgressHUD hideHUDForView:[[UIApplication sharedApplication] keyWindow] animated:YES];
 }
 
 + (UIImage *)fixOrientationWithImage:(UIImage *)aImage
@@ -683,7 +685,7 @@
     if (block) {
         hud.completionBlock = block;
     }
-    [hud hide:YES afterDelay:1.2];
+    [hud hideAnimated:YES afterDelay:1.2];
 }
 
 + (void)showErrorText:(NSString *)text

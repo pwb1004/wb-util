@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'wb-util'
-  s.version          = '1.3'
+  s.version          = '1.3.1'
   s.summary          = 'My utils used for develop'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
@@ -34,8 +34,7 @@ TODO: Add long description of the pod here.
   s.dependency 'AFNetworking', '~> 3.2.1'
   s.dependency 'LBXAlertAction', '~> 1.1.1'
   s.dependency 'Masonry', '~> 1.1.0'
-  s.dependency 'MBProgressHUD', '~> 1.0.0'
-  s.dependency 'MBProgressHUD+Add', '~> 0.0.2'
+  s.dependency 'MBProgressHUD', '~> 1.1.0'
   s.dependency 'MJExtension', '~> 3.0.15.1'
   s.dependency 'MJRefresh', '~> 3.1.15.7'
   s.dependency 'TPKeyboardAvoiding', '~> 1.3.2'
