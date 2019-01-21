@@ -9,6 +9,7 @@
 #import "MyUtil.h"
 #import "constant.h"
 #import "NSString+MD5.h"
+#import "WBGlobalConfig.h"
 
 @implementation MyUtil
 
@@ -90,11 +91,6 @@
     return NO;
 }
 
-+ (void)setNextViewControllerBackButtonTitle:(UIViewController *)viewController
-{
-    viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
-}
-
 + (BOOL)isValidMobile:(NSString *)mobileNum
 {
     NSString * MOBILE = @"^1[34578]\\d{9}$";
@@ -105,18 +101,6 @@
         return NO;
     }
 }
-
-+ (BOOL)isValidPhone:(NSString *)phone
-{
-    NSString * MOBILE = @"\\d{3}-\\d{8}|\\d{4}-\\d{7,8}";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
-    if ([regextestmobile evaluateWithObject:phone] == YES){
-        return YES;
-    }else{
-        return NO;
-    }
-}
-
 
 + (BOOL)isValidEmail:(NSString *)email
 {
@@ -212,18 +196,6 @@
     return NO;
 }
 
-+ (BOOL)checkProductDate:(NSString *)tempDate {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *date = [dateFormatter dateFromString:tempDate];
-    // 判断是否大于当前时间
-    if ([date earlierDate:[NSDate date]] != date) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 +(NSString *)flattenHTML:(NSString *)html trimWhiteSpace:(BOOL)trim
 {
     NSScanner *theScanner = [NSScanner scannerWithString:html];
@@ -246,19 +218,7 @@
     return trim ? [html stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] : html;
 }
 
-+ (BOOL)isValidIdentityCard:(NSString *)identityCard
-{
-    BOOL flag;
-    if (identityCard.length <= 0) {
-        flag = NO;
-        return flag;
-    }
-    NSString *regex2 = @"^(\\d{14}|\\d{17})(\\d|[xX])$";
-    NSPredicate *identityCardPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@",regex2];
-    return [identityCardPredicate evaluateWithObject:identityCard];
-}
-
-+ (NSURL *)imageUrlWithString:(NSString *)string
++ (NSURL *)imageURLWithString:(NSString *)string
 {
     if ([string isKindOfClass:[NSNull class]]) {
         return [NSURL URLWithString:@""];
@@ -267,60 +227,9 @@
     if ([string hasPrefix:@"http"]) {
         iconUrlString = string;
     }else{
-        iconUrlString = [NSString stringWithFormat:@"%@%@", @"http://www.hrjkgs.com", string];
+        iconUrlString = [NSString stringWithFormat:@"%@%@", [WBGlobalConfig sharedConfig].globalImageURLString, string];
     }
     return [NSURL URLWithString:iconUrlString];
-}
-
-+ (NSString *)getWeekdayWithDate:(NSDate *)date
-{
-    NSString * weekday = @"";
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *comps;
-    NSInteger unitFlags =NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday |
-    NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
-    comps = [calendar components:unitFlags fromDate:date];
-    switch (comps.weekday) {
-        case 1:
-        {
-            weekday = @"星期日";
-        }
-            break;
-        case 2:
-        {
-            weekday = @"星期一";
-        }
-            break;
-        case 3:
-        {
-            weekday = @"星期二";
-        }
-            break;
-        case 4:
-        {
-            weekday = @"星期三";
-        }
-            break;
-        case 5:
-        {
-            weekday = @"星期四";
-        }
-            break;
-        case 6:
-        {
-            weekday = @"星期五";
-        }
-            break;
-        case 7:
-        {
-            weekday = @"星期六";
-        }
-            break;
-            
-        default:
-            break;
-    }
-    return weekday;
 }
 
 + (NSString *)getNoneNilString:(id)obj
@@ -337,20 +246,6 @@
     }
     return string;
 }
-
-+ (NSInteger)getAgeWithDateString:(NSString *)dateString andDateFormate:(NSString *)format
-{
-    if ([dateString isKindOfClass:[NSNull class]]) {
-        return 0;
-    }
-    NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:format];
-    NSDate * pastDate = [dateFormatter dateFromString:dateString];
-    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:pastDate];
-    NSInteger age = timeInterval / (60 * 60 * 24 * 365);
-    return age;
-}
-
 
 + (UIImage*)getGrayImage:(UIImage*)sourceImage
 {
@@ -427,6 +322,7 @@
 
 + (void)showProgressHud
 {
+    [UIActivityIndicatorView appearanceWhenContainedInInstancesOfClasses:@[[MBProgressHUD class]]].color = [UIColor whiteColor];
     UIWindow * window = [UIApplication sharedApplication].keyWindow;
     [MBProgressHUD hideHUDForView:window animated:YES];
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
@@ -514,24 +410,6 @@
     CGContextRelease(ctx);
     CGImageRelease(cgimg);
     return img;
-}
-
-
-+ (UIViewController *)findNearsetViewController:(UIView *)view {
-    UIViewController *viewController = nil;
-    for (UIView *next = [view superview]; next; next = next.superview) {
-        UIResponder *nextResponder = [next nextResponder];
-        if ([nextResponder isKindOfClass:[UIViewController class]]) {
-            viewController = (UIViewController *)nextResponder;
-            break;
-        }
-    }
-    return viewController;
-}
-+(NSString *)deleteSpaceStr:(NSString *)str
-{
-    NSString * saveStr = [str stringByReplacingOccurrencesOfString:@" " withString:@""];
-    return saveStr;
 }
 
 //删除字典里的null值
@@ -624,113 +502,6 @@
     return marr;
 }
 
-+ (id)getNoneNillObject:(id)obj
-{
-    if ([obj isKindOfClass:[NSNull class]]) {
-        return @"";
-    }
-    if ([obj isKindOfClass:[NSString class]] && ([obj isEqualToString:@"<null>"] || [obj isEqualToString:@"(null)"])) {
-        return @"";
-    }
-    return [NSString stringWithFormat:@"%@", obj];
-}
-
-+ (UIBarButtonItem *)backButtonWithTarget:(id)target action:(SEL)selector
-{
-    UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(10, 0, 30, 30);
-    [button setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 8)];
-    [button setTitleEdgeInsets:UIEdgeInsetsMake(0, -4, 0, 4)];
-    [button setImage:[UIImage imageNamed:@"back_indicatior"] forState:UIControlStateNormal];
-    //    [button setTitle:@"返回" forState:UIControlStateNormal];
-    //    button.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:14];
-    UIBarButtonItem * barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    [button addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
-    return barButtonItem;
-}
-+ (NSString *)dateStringFromObject:(id)object
-{
-    if (object) {
-        double timeStamp = [object doubleValue];
-        
-        NSDate * date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
-        
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MM月dd日 HH:mm"];
-        NSString * time = [formatter stringFromDate:date];
-        return time;
-        
-    }
-    return @"";
-}
-+ (void)jumpToLoginWithViewController:(UIViewController *)viewController
-{
-    UINavigationController * loginNavigationController = [MyUtil getViewControllerWithIdentifier:@"loginNavigation" storyboardName:@"Login"];
-    [viewController presentViewController:loginNavigationController animated:YES completion:^{
-        
-    }];
-}
-
-+ (void)showAlertWithText:(NSString *)text isForSuccess:(BOOL)isForSuccess completion:(MBProgressHUDCompletionBlock)block
-{
-    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:[[[UIApplication sharedApplication] delegate] window] animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.color = [UIColor clearColor];
-    hud.dimBackground = YES;
-    hud.removeFromSuperViewOnHide = YES;
-//    HudView * view = [[HudView alloc] init];
-//    view.title = text;
-//    view.type = isForSuccess ? 0 : 1;
-//    hud.customView = view;
-    if (block) {
-        hud.completionBlock = block;
-    }
-    [hud hideAnimated:YES afterDelay:1.2];
-}
-
-+ (void)showErrorText:(NSString *)text
-{
-    [MyUtil showAlertWithText:text isForSuccess:NO completion:nil];
-}
-
-+ (void)showErrorText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block
-{
-    [MyUtil showAlertWithText:text isForSuccess:NO completion:block];
-}
-
-+ (void)showSuccessText:(NSString *)text
-{
-    [MyUtil showAlertWithText:text isForSuccess:YES completion:nil];
-}
-
-+ (void)showSuccessText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block
-{
-    [MyUtil showAlertWithText:text isForSuccess:YES completion:block];
-}
-
-+ (NSString *)getMd5Password:(NSString *)string
-{
-    NSString * firstMd5 = [[NSString stringWithFormat:@"%@hrjkgs.com", string] md5];
-    return [[NSString stringWithFormat:@"%@hrjkgs.com", firstMd5] md5];
-}
-+ (NSArray *)getConstArrayWithKey:(NSString *)key
-{
-    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"const" ofType:@"plist"];
-    if (!filePath) {
-        return @[];
-    }
-    NSDictionary * content = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    NSDictionary * path = content[key];
-    NSArray * array = path[@"contents"];
-    return array;
-}
-+ (void)goLogin
-{
-    UINavigationController * loginNavigationController = getVC(@"loginNavigation", @"Login");
-    [[[[UIApplication sharedApplication]keyWindow]rootViewController] presentViewController:loginNavigationController animated:YES completion:^{
-//        GY_APP_DELEGATE.tabBarController = nil;
-    }];
-}
 + (NSString *)getIPAddress {
     NSString *address = @"0.0.0.0";
     struct ifaddrs *interfaces = NULL;
@@ -755,82 +526,6 @@
     // Free memory
     freeifaddrs(interfaces);
     return address;
-    
-    /*
-     * 此处可以选择是优先返回wifi的还是cell的，或者ipv4的还是ipv6的
-     */
-    //    BOOL preferIPv4 = NO;
-    //    NSArray *searchArray = preferIPv4 ?
-    //    @[IOS_WIFI @"/"IP_ADDR_IPv4, IOS_WIFI@"/" IP_ADDR_IPv6,IOS_CELLULAR @"/"IP_ADDR_IPv4, IOS_CELLULAR@"/" IP_ADDR_IPv6] :
-    //    @[IOS_WIFI @"/"IP_ADDR_IPv6, IOS_WIFI@"/" IP_ADDR_IPv4,IOS_CELLULAR @"/"IP_ADDR_IPv6, IOS_CELLULAR@"/" IP_ADDR_IPv4] ;
-    //
-    //    NSDictionary *addresses = [MyUtil getIPAddresses];
-    //    NSLog(@"addresses: %@", addresses);
-    //
-    //    __blockNSString *address;
-    //    [searchArray enumerateObjectsUsingBlock:^(NSString *key,NSUInteger idx, BOOL *stop)
-    //     {
-    //         address = addresses[key];
-    //         if(address) *stop =YES;
-    //     } ];
-    //    return address ? address :@"0.0.0.0";
-}
-
-+ (NSDictionary *)getXywyApiConfigWithKey:(NSString *)key
-{
-    NSString * filePath = [[NSBundle mainBundle] pathForResource:@"xywy_api" ofType:@"plist"];
-    NSDictionary * allContent = [NSDictionary dictionaryWithContentsOfFile:filePath];
-    return allContent[key];
-}
-+ (BOOL)isValidPassword:(NSString *)password
-{
-    NSString * MOBILE = @"^[0-9a-zA-Z]{6,15}";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
-    if ([regextestmobile evaluateWithObject:password] == YES){
-        return YES;
-    }else{
-        return NO;
-    }
-}
-
-+ (BOOL)isValidNickname:(NSString *)nickname
-{
-    NSString * MOBILE = @"^[0-9a-zA-Z\u4e00-\u9fa5]{2,8}";
-    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
-    if ([regextestmobile evaluateWithObject:nickname] == YES){
-        return YES;
-    }else{
-        return NO;
-    }
-}
-
-+ (NSString *)getSwitchStatus:(NSInteger)integer
-{
-    if (integer ==0) {
-        return @"每天";
-    }
-    else if (integer ==1) {
-        return @"星期一";
-    }
-    else if (integer ==2) {
-        return @"星期二";
-    }
-    else if (integer ==3) {
-        return @"星期三";
-    }
-    else if (integer ==4) {
-        return @"星期四";
-    }
-    else if (integer ==5) {
-        return @"星期五";
-    }
-    else if (integer ==6) {
-        return @"星期六";
-    }
-    else if (integer ==7) {
-        return @"星期日";
-    }
-    return @"每天";
 }
 
 + (UIViewController *)getCurrentVC
@@ -879,91 +574,31 @@
     return vc;
 }
 
-/** 计算label的size*/
-+ (CGSize)labelSizeWithText:(NSString *)text maxSize:(CGSize)maxSize fontSize:(CGFloat)fontSize{
-    return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:fontSize]} context:nil].size;
++ (NSString *)getDeviceUUID
+{
+    NSString * uuid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
+    uuid = [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    return uuid;
 }
 
-+ (void)showActionSheetWithTitles:(NSArray *)titles completion:(void (^)(NSInteger index))block
++ (NSString *)getTrimString:(NSString *)s
 {
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    for (NSInteger i = 0; i < titles.count; i++) {
-        UIAlertAction * action = [UIAlertAction actionWithTitle:getNoneNil(titles[i]) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            block(i);
-        }];
-        [alert addAction:action];
-    }
-    
-    UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        block(-1);
+    NSString * rs = [s stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return rs;
+}
+
++ (void)showAlert:(NSString *)msg
+{
+    [LBXAlertAction showAlertWithTitle:@"" msg:msg buttonsStatement:@[@"确定"] chooseBlock:^(NSInteger buttonIdx) {
+        
     }];
-    
-    [alert addAction:cancelAction];
-    [[MyUtil getCurrentVC] presentViewController:alert animated:YES completion:nil];
 }
 
-/**
- 判断是否是表情
- yes 是表情
- */
-+ (BOOL)isContainsTwoEmoji:(NSString *)string{
-    __block BOOL isEomji =NO;
-    
-    [string enumerateSubstringsInRange:NSMakeRange(0, [string length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:
-     ^(NSString *substring,NSRange substringRange,NSRange enclosingRange, BOOL *stop) {
-         const unichar hs = [substring characterAtIndex:0];
-         //         NSLog(@"hs++++++++%04x",hs);
-         if (0xd800 <= hs && hs <=0xdbff) {
-             if (substring.length >1) {
-                 const unichar ls = [substring characterAtIndex:1];
-                 const int uc = ((hs -0xd800) *0x400) + (ls -0xdc00) +0x10000;
-                 if (0x1d000 <= uc && uc <=0x1f77f)
-                 {
-                     isEomji =YES;
-                 }
-             }
-         } else if (substring.length > 1) {
-             const unichar ls = [substring characterAtIndex:1];
-             if (ls ==0x20e3|| ls ==0xfe0f) {
-                 isEomji =YES;
-             }
-         } else {
-             if (0x2100 <= hs && hs <=0x27ff && hs != 0x263b) {
-                 isEomji =YES;
-             } else if (0x2B05 <= hs && hs <=0x2b07) {
-                 isEomji =YES;
-             } else if (0x2934 <= hs && hs <=0x2935) {
-                 isEomji =YES;
-             } else if (0x3297 <= hs && hs <=0x3299) {
-                 isEomji =YES;
-             } else if (hs ==0xa9 || hs ==0xae || hs ==0x303d || hs ==0x3030 || hs ==0x2b55 || hs ==0x2b1c || hs ==0x2b1b || hs ==0x2b50|| hs ==0x231a ) {
-                 isEomji =YES;
-             }
-         }
-         
-     }];
-    if ([MyUtil isNineKeyBoard:string]) {
-        isEomji = NO;
-    }
-    
-    return isEomji;
-}
-
-/**
- 判断是不是九宫格
- @param string  输入的字符
- @return YES(是九宫格拼音键盘)
- */
-+ (BOOL)isNineKeyBoard:(NSString *)string
++ (void)showAlertWithTitle:(NSString *)title withMessage:(NSString *)msg
 {
-    NSString *other = @"➋➌➍➎➏➐➑➒";
-    int len = (int)string.length;
-    for(int i=0;i<len;i++)
-    {
-        if(!([other rangeOfString:string].location != NSNotFound))
-            return NO;
-    }
-    return YES;
+    [LBXAlertAction showAlertWithTitle:title msg:msg buttonsStatement:@[@"确定"] chooseBlock:^(NSInteger buttonIdx) {
+        
+    }];
 }
 
 @end

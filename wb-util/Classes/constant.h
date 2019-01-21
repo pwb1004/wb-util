@@ -22,6 +22,8 @@
 #import "Masonry.h"
 #import "LJXPhotoAlbum.h"
 #import "MJRefresh.h"
+#import "WBGlobalConfig.h"
+#import "WBDateUtil.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #define SIMULATOR 1
@@ -39,7 +41,8 @@
 #   define DLog(...)
 #endif
 
-#define MyAlert(title,msg)          [[[UIAlertView alloc] initWithTitle:title message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil] show]
+#define MyAlert(x)                  [MyUtil showAlert:x]
+#define MyFullAlert(t, m)           [MyUtil showAlertWithTitle:t withMessage:m]
 #define getVC(vcID, sbName)         [[UIStoryboard storyboardWithName:sbName bundle:nil] instantiateViewControllerWithIdentifier:vcID]
 #define getNoneNil(object)          [MyUtil getNoneNilString:object]
 #define MyColor(x, y, z)            [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1]
@@ -53,6 +56,7 @@
 #define appKeyWindow                [[UIApplication sharedApplication] keyWindow]
 #define MyLabelSize(text, maxSize, foneSize) [MyUtil labelSizeWithText:text maxSize:maxSize fontSize:foneSize]
 #define MyColorFromHex(s)               [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
+#define getImageURL(x)              [MyUtil imageURLWithString:x]
 
 //系统版本和屏幕size
 #define OS_VERSION      [[[UIDevice currentDevice] systemVersion] integerValue]
@@ -65,9 +69,7 @@
 //复用cell的identifier
 #define IDENTIFIER     @"Cell"
 #define IDENTIFIER_COLLECTIONCELL       @"IDENTIFIER_COLLECTIONCELL"
-
-//收到新消息的通知名称
-#define NOTIFICATION_NEW_MESSAGE        @"NOTIFICATION_NEW_MESSAGE"
+#define IDENTIFIER_REUSEVIEW            @"IDENTIFIER_REUSEVIEW"
 
 //默认头像和默认图片
 #define DEFAULT_PLACEHODER          [UIImage imageNamed:@"default_placeholder"]
@@ -76,31 +78,6 @@
 //网络请求分页使用
 #define MY_PAGE_SIZE                @"20"
 #define MY_PAGE_INTEGER             20
-
-//网络请求返回数据中的一些key
-#define RESULTLIST                  @"RESULTLIST"
-#define RESULT                      @"RESULT"
-#define DATA_KEY                    @"data"
-#define CODE_KEY                    @"RESULTCODE"
-#define RESON_KEY                   @"RESON"
-#define DESCRIPTION_KEY             @"DESCRIPTION"
-
-//保存数据时用
-#define SAVE_USERNAME               @"SAVE_USERNAME"
-#define SAVE_PASSWORD               @"SAVE_PASSWORD"
-#define SAVE_IS_LOGIN               @"SAVE_IS_LOGIN"
-#define SAVE_USERTYPE               @"SAVE_USERTYPE"
-#define SAVE_AUTH_ID                @"SAVE_AUTH_ID"
-#define SAVE_TOKEN                  @"SAVE_TOKEN"
-#define SAVE_USER_ID                @"SAVE_USER_ID"
-#define SAVE_ROLE                   @"SAVE_ROLE"
-#define SAVE_HEAD_IMAGE_PATH        @"SAVE_HEAD_IMAGE_PATH"
-#define SAVE_NICKNAME               @"SAVE_NICKNAME"
-#define SAVE_USER_SEX               @"SAVE_USER_SEX"
-#define SAVE_POINT                  @"SAVE_POINT"
-#define SAVE_ID_CARD                @"SAVE_ID_CARD"
-
-#define SAVE_PASSWD                 @"SAVE_PASSWD"
 
 typedef void(^CompletionBlockString)(NSString * string);
 

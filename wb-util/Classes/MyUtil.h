@@ -16,17 +16,26 @@
 
 @interface MyUtil : NSObject
 
-
-//判断给定的对象是否为空
+/**
+ 判断给定的对象是否为空
+ @param string 给定的对象
+ @return 是否为空
+ */
 + (BOOL)isNilOrEmpty:(id)string;
 
-//设置视图下一级标题为返回
-+ (void)setNextViewControllerBackButtonTitle:(UIViewController *)viewController;
+/**
+ 判断给定的字符串是否为有效的身份证号码
+ @param idNumber 给定的字符串
+ @return 是否为有效的身份证号码
+ */
++ (BOOL)isValidIdCardNumber:(id)idNumber;
 
-//判断是否有效的手机号码
+/**
+ 判断是否有效的手机号码
+ @param mobileNum 要判断的手机号码
+ @return 是否为有效的手机号码
+ */
 + (BOOL)isValidMobile:(NSString *)mobileNum;
-
-+ (BOOL)isValidPhone:(NSString *)phone;
 
 + (BOOL)isValidEmail:(NSString *)email;
 
@@ -47,7 +56,7 @@
 + (void)saveInteger:(NSInteger)number forKey:(NSString *)key;
 
 + (NSInteger)getIntegerForKey:(NSString *)key;
-+(NSString *)deleteSpaceStr:(NSString *)str;
+
 /**
  *  @Author Pang Weibo, 14-12-26 09:12
  *
@@ -60,10 +69,6 @@
  */
 + (id)getViewControllerWithIdentifier:(NSString *)identifier storyboardName:(NSString *)storyboardName;
 
-/* 判断是否包含汉字*/
-+ (BOOL)isChiese:(NSString *)str;
-+ (BOOL)checkProductDate:(NSString *)tempDate;
-
 /**
  *  去掉字符串中的HTML标签
  *
@@ -74,22 +79,9 @@
  */
 + (NSString *)flattenHTML:(NSString *)html trimWhiteSpace:(BOOL)trim;
 
-/**
- *  判断是否有效的身份证号
- *
- *  @param identityCard 要判断的字符串
- *
- *  @return 是否有效
- */
-+ (BOOL)isValidIdentityCard:(NSString *)identityCard;
-
-+ (NSURL *)imageUrlWithString:(NSString *)string;
-
-+ (NSString *)getWeekdayWithDate:(NSDate *)date;
++ (NSURL *)imageURLWithString:(NSString *)string;
 
 + (NSString *)getNoneNilString:(id)obj;
-
-+ (NSInteger)getAgeWithDateString:(NSString *)dateString andDateFormate:(NSString *)format;
 
 //获取灰色图片
 + (UIImage*)getGrayImage:(UIImage*)sourceImage;
@@ -102,64 +94,36 @@
 
 + (void)showTipText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block;
 
-+ (BOOL)isValidIdCardNumber:(id)idNumber;
-
 + (void)showProgressHud;
+
 + (void)hideProgressHud;
 
 + (UIImage *)fixOrientationWithImage:(UIImage *)aImage;
 
-+ (UIViewController *)findNearsetViewController:(UIView *)view;
-
 //删除字典里的null值
 + (NSDictionary *)deleteEmpty:(NSDictionary *)dic;
 
-+ (id)getNoneNillObject:(id)obj;
++ (NSArray *)deleteEmptyArr:(NSArray *)arr;
 
-+ (UIBarButtonItem *)backButtonWithTarget:(id)target action:(SEL)selector;
-+ (NSString *)dateStringFromObject:(id)object;
-+ (void)jumpToLoginWithViewController:(UIViewController *)viewController;
-+ (void)showErrorText:(NSString *)text;
-
-+ (void)showErrorText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block;
-
-+ (void)showSuccessText:(NSString *)text;
-
-+ (void)showSuccessText:(NSString *)text completion:(MBProgressHUDCompletionBlock)block;
-+ (NSString *)getMd5Password:(NSString *)string;
-+ (NSArray *)getConstArrayWithKey:(NSString *)key;
-+ (void)goLogin;
 + (NSString *)getIPAddress;
-+ (NSDictionary *)getXywyApiConfigWithKey:(NSString *)key;
-+ (BOOL)isValidPassword:(NSString *)password;
-+ (BOOL)isValidNickname:(NSString *)nickname;
-+ (NSString *)getSwitchStatus:(NSInteger)integer;
 
 + (UIViewController *)getCurrentVC;
 
-/** 计算label的size*/
-+ (CGSize)labelSizeWithText:(NSString *)text maxSize:(CGSize)maxSize fontSize:(CGFloat)fontSize;
-
-
 /**
- 根据标题创建UIActionSheet
-
- @param titles 标题数组
- @param block index为标题数组的index，取消返回的index为-1
+ 获取设备UUID for Vendor
+ @return 设备UUIDString
  */
-+ (void)showActionSheetWithTitles:(NSArray *)titles completion:(void (^)(NSInteger index))block;
++ (NSString *)getDeviceUUID;
 
 /**
-判断是否是表情
-yes 是表情
-*/
-+ (BOOL)isContainsTwoEmoji:(NSString *)string;
-
-/**
- 判断是不是九宫格
- @param string  输入的字符
- @return YES(是九宫格拼音键盘)
+ 获取去掉首尾空格和换行符的字符串
+ @param s 要处理的字符串
+ @return 去掉首尾空格和换行符的字符串
  */
-+ (BOOL)isNineKeyBoard:(NSString *)string;
++ (NSString *)getTrimString:(NSString *)s;
+
++ (void)showAlert:(NSString *)msg;
+
++ (void)showAlertWithTitle:(NSString *)title withMessage:(NSString *)msg;
 
 @end
