@@ -47,6 +47,7 @@
 #define getNoneNil(object)          [MyUtil getNoneNilString:object]
 #define MyColor(x, y, z)            [UIColor colorWithRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1]
 #define MyFont(x)                   [UIFont systemFontOfSize:x]
+#define MyBoldFont(x)               [UIFont boldSystemFontOfSize:x]
 #define MyImage(x)                  [UIImage imageNamed:x]
 #define MyNib(x)                    [UINib nibWithNibName:x bundle:nil]
 #define HIDE_PROGRESS               [MyUtil hideProgressHud]
@@ -56,7 +57,6 @@
 #define appKeyWindow                [[UIApplication sharedApplication] keyWindow]
 #define MyLabelSize(text, maxSize, foneSize) [MyUtil labelSizeWithText:text maxSize:maxSize fontSize:foneSize]
 #define MyColorFromHex(s)               [UIColor colorWithRed:(((s & 0xFF0000) >> 16))/255.0 green:(((s &0xFF00) >>8))/255.0 blue:((s &0xFF))/255.0 alpha:1.0]
-#define getImageURL(x)              [MyUtil imageURLWithString:x]
 
 //系统版本和屏幕size
 #define OS_VERSION      [[[UIDevice currentDevice] systemVersion] integerValue]

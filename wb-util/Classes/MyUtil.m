@@ -93,7 +93,7 @@
 
 + (BOOL)isValidMobile:(NSString *)mobileNum
 {
-    NSString * MOBILE = @"^1[34578]\\d{9}$";
+    NSString * MOBILE = @"^1[345789]\\d{9}$";
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     if ([regextestmobile evaluateWithObject:mobileNum] == YES){
         return YES;
