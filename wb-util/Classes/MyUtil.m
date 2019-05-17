@@ -304,6 +304,7 @@
     hud.backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     hud.removeFromSuperViewOnHide = YES;
     hud.detailsLabel.text = text;
+    hud.detailsLabel.font = [UIFont systemFontOfSize:18];
     hud.bezelView.backgroundColor = [UIColor blackColor];
     hud.detailsLabel.textColor = [UIColor whiteColor];
     if (block) {

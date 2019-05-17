@@ -142,6 +142,8 @@
 		A8906F6003D20F1B2E9C5BFEF7AE9C1F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E698B3B10843C76398055DFFD536CBE /* Foundation.framework */; };
 		A916FEA2437B43F14F249CB55B41CD13 /* TPKeyboardAvoiding-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DF9F6FB8F6798A4872C256B508155FE /* TPKeyboardAvoiding-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A97F84C4DB495C9C6B477A87360DC58A /* NSObject+MJProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = 138A4D862F9A03F1C64EA75C39CDC067 /* NSObject+MJProperty.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9A0B828228E7EF600C89D03 /* WBGlobalConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A9C144FF21F5A1A7008E9633 /* WBGlobalConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9A0B829228E7F0700C89D03 /* WBDateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = A9C1450321F5AC68008E9633 /* WBDateUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9C1450121F5A1A7008E9633 /* WBGlobalConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A9C144FF21F5A1A7008E9633 /* WBGlobalConfig.h */; };
 		A9C1450221F5A1A7008E9633 /* WBGlobalConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C1450021F5A1A7008E9633 /* WBGlobalConfig.m */; };
 		A9C1450521F5AC68008E9633 /* WBDateUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = A9C1450321F5AC68008E9633 /* WBDateUtil.h */; };
@@ -1334,6 +1336,8 @@
 				4DA7AF4AFDD1F049A9DEDB7016907029 /* NSString+MD5.h in Headers */,
 				D42CE9DCB00A07138B8F63EF1255A310 /* wb-util-umbrella.h in Headers */,
 				CD129A276FC4136472DDE7126D1F29C2 /* WBVerifyCodeButton.h in Headers */,
+				A9A0B829228E7F0700C89D03 /* WBDateUtil.h in Headers */,
+				A9A0B828228E7EF600C89D03 /* WBGlobalConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1679,6 +1683,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;

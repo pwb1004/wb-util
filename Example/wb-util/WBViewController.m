@@ -24,7 +24,9 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    [MyUtil showProgressHud];
 }
 
+- (IBAction)action:(id)sender {
+    [MyUtil showTipText:@"字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变"];
+}
 @end

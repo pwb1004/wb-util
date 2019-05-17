@@ -8,11 +8,9 @@
 
 Pod::Spec.new do |s|
   s.name             = 'wb-util'
-  s.version          = '1.3.3'
+  s.version          = '1.3.4'
   s.summary          = 'My utils used for develop'
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      = 'v1.3.4 更新MJRefresh、MJExtension版本，修改[MyUtil showTipText:]方法字体大小为18'
 
   s.homepage         = 'https://github.com/pwb1004/wb-util'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
@@ -35,7 +33,7 @@ TODO: Add long description of the pod here.
   s.dependency 'LBXAlertAction', '~> 1.1.1'
   s.dependency 'Masonry', '~> 1.1.0'
   s.dependency 'MBProgressHUD', '~> 1.1.0'
-  s.dependency 'MJExtension', '~> 3.0.15.1'
-  s.dependency 'MJRefresh', '~> 3.1.15.7'
+  s.dependency 'MJExtension', '~> 3.0.17'
+  s.dependency 'MJRefresh', '~> 3.2.0'
   s.dependency 'TPKeyboardAvoiding', '~> 1.3.2'
 end
