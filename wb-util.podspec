@@ -8,9 +8,11 @@
 
 Pod::Spec.new do |s|
   s.name             = 'wb-util'
-  s.version          = '1.3.4'
+  s.version          = '1.3.5'
   s.summary          = 'My utils used for develop'
-  s.description      = 'v1.3.4 更新MJRefresh、MJExtension版本，修改[MyUtil showTipText:]方法字体大小为18'
+  s.description      = <<-DESC
+  TODO: Add long description of the pod here.
+  DESC
 
   s.homepage         = 'https://github.com/pwb1004/wb-util'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
