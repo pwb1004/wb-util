@@ -17,7 +17,7 @@ wb-util is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'wb-util'
+pod 'wb-util', '1.3.5'
 ```
 
 ## Author
