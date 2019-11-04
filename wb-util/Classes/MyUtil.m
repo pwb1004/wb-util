@@ -93,7 +93,7 @@
 
 + (BOOL)isValidMobile:(NSString *)mobileNum
 {
-    NSString * MOBILE = @"^1[345789]\\d{9}$";
+    NSString * MOBILE = @"^1\\d{10}$";
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
     if ([regextestmobile evaluateWithObject:mobileNum] == YES){
         return YES;
@@ -111,7 +111,7 @@
 
 + (BOOL)isValidPlate:(NSString *)plate
 {
-    NSString * plateRegex = @"^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{4,5}[a-zA-Z_0-9_\u4e00-\u9fa5]";
+    NSString * plateRegex = @"([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})";
     NSPredicate * plateTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", plateRegex];
     return [plateTest evaluateWithObject:plate];
 }
@@ -315,10 +315,49 @@
 
 + (BOOL)isValidIdCardNumber:(id)idNumber
 {
-    NSString * regex = @"^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X|x)$";
-    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    BOOL isMatch = [pred evaluateWithObject:idNumber];
-    return isMatch;
+//    NSString * regex = @"^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X|x)$";
+//    NSPredicate *pred = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+//    BOOL isMatch = [pred evaluateWithObject:idNumber];
+//    return isMatch;
+//
+    /**
+     *  身份证号全校验
+     */
+    NSString * IDCardNumber = getNoneNil(idNumber);
+    IDCardNumber = [IDCardNumber stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if ([IDCardNumber length] != 18)
+    {
+        return NO;
+    }
+    NSString *mmdd = @"(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8])))";
+    NSString *leapMmdd = @"0229";
+    NSString *year = @"(19|20)[0-9]{2}";
+    NSString *leapYear = @"(19|20)(0[48]|[2468][048]|[13579][26])";
+    NSString *yearMmdd = [NSString stringWithFormat:@"%@%@", year, mmdd];
+    NSString *leapyearMmdd = [NSString stringWithFormat:@"%@%@", leapYear, leapMmdd];
+    NSString *yyyyMmdd = [NSString stringWithFormat:@"((%@)|(%@)|(%@))", yearMmdd, leapyearMmdd, @"20000229"];
+    NSString *area = @"(1[1-5]|2[1-3]|3[1-7]|4[1-6]|5[0-4]|6[1-5]|82|[7-9]1)[0-9]{4}";
+    NSString *regex = [NSString stringWithFormat:@"%@%@%@", area, yyyyMmdd  , @"[0-9]{3}[0-9Xx]"];
+
+    NSPredicate *regexTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    if (![regexTest evaluateWithObject:IDCardNumber])
+    {
+        return NO;
+    }
+    int summary = ([IDCardNumber substringWithRange:NSMakeRange(0,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(10,1)].intValue) *7
+    + ([IDCardNumber substringWithRange:NSMakeRange(1,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(11,1)].intValue) *9
+    + ([IDCardNumber substringWithRange:NSMakeRange(2,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(12,1)].intValue) *10
+    + ([IDCardNumber substringWithRange:NSMakeRange(3,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(13,1)].intValue) *5
+    + ([IDCardNumber substringWithRange:NSMakeRange(4,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(14,1)].intValue) *8
+    + ([IDCardNumber substringWithRange:NSMakeRange(5,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(15,1)].intValue) *4
+    + ([IDCardNumber substringWithRange:NSMakeRange(6,1)].intValue + [IDCardNumber substringWithRange:NSMakeRange(16,1)].intValue) *2
+    + [IDCardNumber substringWithRange:NSMakeRange(7,1)].intValue *1 + [IDCardNumber substringWithRange:NSMakeRange(8,1)].intValue *6
+    + [IDCardNumber substringWithRange:NSMakeRange(9,1)].intValue *3;
+    NSInteger remainder = summary % 11;
+    NSString *checkBit = @"";
+    NSString *checkString = @"10X98765432";
+    checkBit = [checkString substringWithRange:NSMakeRange(remainder,1)];// 判断校验位
+    return [checkBit isEqualToString:[[IDCardNumber substringWithRange:NSMakeRange(17,1)] uppercaseString]];
 }
 
 + (void)showProgressHud
@@ -600,6 +639,26 @@
     [LBXAlertAction showAlertWithTitle:title msg:msg buttonsStatement:@[@"确定"] chooseBlock:^(NSInteger buttonIdx) {
         
     }];
+}
+
++ (NSString *)getAppVersionName
+{
+    NSString * version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    return version;
+}
+
++ (BOOL)isValidFixedPhone:(NSString *)phone
+{
+    NSString * s = getNoneNil(phone);
+    if (isEmpty(s)) {
+        return NO;
+    }
+    NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", PHS];
+    if ([regextestct evaluateWithObject:s] == YES) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

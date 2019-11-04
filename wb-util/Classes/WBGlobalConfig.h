@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WBGlobalConfig : NSObject
 
-+ (WBGlobalConfig *)sharedConfig;
++ (instancetype)sharedConfig;
 
 @property (nonatomic, copy) NSString * globalURLString;
 @property (nonatomic, copy) NSString * globalSecondaryURLString;

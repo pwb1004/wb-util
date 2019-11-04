@@ -10,7 +10,7 @@
 
 @implementation WBGlobalConfig
 
-+ (WBGlobalConfig *)sharedConfig
++ (instancetype)sharedConfig
 {
     static WBGlobalConfig *sharedSingleton = nil;
     static dispatch_once_t onceToken;

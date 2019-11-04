@@ -10,6 +10,7 @@
 #import "constant.h"
 
 @interface WBViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *tf;
 
 @end
 
@@ -27,6 +28,12 @@
 }
 
 - (IBAction)action:(id)sender {
-    [MyUtil showTipText:@"字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变"];
+//    [MyUtil showTipText:@"字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变字体大小的改变"];
+    NSString * text = _tf.text;
+    if ([MyUtil isValidMobile:text]) {
+        showTip(@"有效");
+    } else {
+        showTip(@"无效");
+    }
 }
 @end

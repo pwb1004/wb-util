@@ -126,4 +126,8 @@
 
 + (void)showAlertWithTitle:(NSString *)title withMessage:(NSString *)msg;
 
++ (NSString *)getAppVersionName;
+
++ (BOOL)isValidFixedPhone:(NSString *)phone;
+
 @end

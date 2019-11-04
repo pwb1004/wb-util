@@ -67,4 +67,28 @@
     return weekday;
 }
 
++ (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval
+{
+    NSDate * date = [NSDate dateWithTimeIntervalSince1970:timeInterval];
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:SS"];
+    return [df stringFromDate:date];
+}
+
++ (NSTimeInterval)timeIntervalFromDateString:(NSString *)string
+{
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd HH:mm:SS"];
+    NSDate * date = [df dateFromString:string];
+    return [date timeIntervalSince1970];
+}
+
++ (NSDate *)getDateWithString:(NSString *)s formatter:(NSString *)formatter
+{
+    NSDateFormatter * df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:formatter];
+    NSDate * date = [df dateFromString:s];
+    return date;
+}
+
 @end
