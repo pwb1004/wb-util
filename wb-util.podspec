@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'wb-util'
-  s.version          = '1.3.6'
+  s.version          = '1.3.7'
   s.summary          = 'My utils used for develop'
   s.description      = <<-DESC
   TODO: Add long description of the pod here.
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'AFNetworking', '~> 3.2.1'
+  s.dependency 'AFNetworking', '~> 4.0.1'
   s.dependency 'LBXAlertAction', '~> 1.1.1'
   s.dependency 'Masonry', '~> 1.1.0'
   s.dependency 'MBProgressHUD', '~> 1.1.0'
